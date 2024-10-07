@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="Add-it">
+  <meta name="keywords" content="Add-it, Text-to-Image, Editing">
+  <meta name="viewport" content="width=device-width, initial-scale=0.1">
+  <title>Add-it</title>
+
+<!--   Global site tag (gtag.js) - Google Analytics-->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-Y5ZVQZ7NHC"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-Y5ZVQZ7NHC');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+<body>
+
+<!-- Authors -->
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">Add-it: Training-Free Object Insertion in Images With Pretrained Diffusion Models</h1>
+          <div class="is-size-4 publication-authors">
+            <span class="author-block">
+                <a href="https://yoadtew.github.io/">Yoad Tewel</a><sup>1,2</sup>,
+            </span>
+            <span class="author-block">
+                <a href="https://rinongal.github.io/">Rinon Gal</a><sup>1,2</sup>,
+            </span>
+            <span class="author-block">
+                <a href="https://chechiklab.biu.ac.il/~dvirsamuel/">Dvir Samuel</a><sup>3</sup>,
+            </span>
+            <br>
+            <span class="author-block">
+                <a href="https://research.nvidia.com/person/yuval-atzmon/">Yuval Atzmon</a><sup>1</sup>
+            </span>
+            <span class="author-block">
+                <a href="https://www.cs.tau.ac.il/~wolf/">Lior Wolf</a><sup>2</sup>,
+            </span>
+            <span class="author-block">
+                <a href="https://research.nvidia.com/person/gal-chechik/">Gal Chechik</a><sup>1</sup>,
+            </span>
+          </div>
+          <div class="is-size-4 publication-authors">
+            <span class="author-block"><sup>1</sup>NVIDIA,</span>
+            <span class="author-block"><sup>2</sup>Tel Aviv University,</span>
+            <span class="author-block"><sup>3</sup>Bar-Ilan University</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a href="https://drive.google.com/file/d/1sIiyIjD5wK9kyfpNm2ungbme7Gq7kJfv/view?usp=drive_link"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href=""
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code (Coming soon)</span>
+                  </a>
+              </span>
+
+              <!-- Data Link. -->
+              <!-- <span class="link-block">
+                <a href=""
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <i class="fa fa-paperclip"></i>
+                  </span>
+                  <span>Benchmark</span>
+                  </a>
+              </span> -->
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!--video-->
+<!-- <section class="section hero is-light">
+  <div class="container is-max-desktop">
+        <div class="item">
+          <p style="margin-bottom: 30px">
+        <video poster="" id="tree" controls="" muted="" height="100%">
+          <source src="static/videos/consistory-video.mp4" type="video/mp4">
+        </video>
+      </div>
+  </div>
+</section> -->
+
+<!--teaser-->
+<section class="hero teaser">
+  <div class="container">
+    <div class="hero-body">
+      <h2 class="has-text-centered" style="font-size: 1.2rem;">
+        <b>TLDR</b>: We present <b><i>Add-it</i></b>, a training-free method for adding objects to images based on text prompts. Add-it works well on real and generated images. 
+        Our approach leverages an existing text-to-image model (FLUX.1-dev) without requiring additional training.
+      </h2>
+      <br>
+
+      <h2 class="subtitle has-text-centered" style="font-size: 1.38rem; color: #1c1c1c">
+        We present <b><i>Add-it</i></b>, a <u>training-free approach</u> that enables adding objects to images (both real and generated), from a <u>simple text prompt</u>.
+        <i>Add-it</i> leverages text-to-image diffusion models to incorporate attention from three sources: the original image, the text prompt, and the generated image. 
+        This approach, which does not require fine-tuning, ensures structural consistency and realistic object placement. 
+        To tackle the challenges of object insertion we introduce a weighted attention mechanism, a subject-guided latent blending technique, and a noise structure transfer step. 
+        <i>Add-it</i> outperforms previous supervised methods and introduces the "Additing Affordance Benchmark" to assess object placement plausibility, achieving state-of-the-art results across multiple benchmarks.
+      </h2>
+      <img src="static/images/Teaser.png" alt="Teaser." style="height: 190%;"/>
+    </div>
+  </div>
+</section>
+
+<!--slider-->
+<section class="hero is-light is-small">
+  <div class="hero-body">
+    <div class="container" style="max-width: 25%;">
+      <div class="section-title">
+        <h2 class="title is-3 is-centered"><i>Generations with Add-it</h2>
+      </div>
+
+      <div id="results-carousel-face" class="carousel results-carousel">
+
+        <div class="item item-puppet">
+          <div class="carousel-content">
+            <img src="static/images/slider/0.png"
+                   alt="Puppet."/>
+          </div>
+        </div>
+
+        <div class="item item-puppet">
+          <div class="carousel-content">
+            <img src="static/images/slider/1.png"
+                   alt="Puppet."/>
+          </div>
+        </div>
+
+        <div class="item item-puppet">
+          <div class="carousel-content">
+            <img src="static/images/slider/2.png"
+                   alt="Puppet."/>
+          </div>
+        </div>
+        
+        <div class="item item-puppet">
+          <div class="carousel-content">
+            <img src="static/images/slider/3.png"
+                   alt="Puppet."/>
+          </div>
+        </div>
+
+        <div class="item item-puppet">
+          <div class="carousel-content">
+            <img src="static/images/slider/4.png"
+                   alt="Puppet."/>
+          </div>
+        </div>
+        
+        <div class="item item-puppet">
+          <div class="carousel-content">
+            <img src="static/images/slider/5.png"
+                   alt="Puppet."/>
+          </div>
+        </div>
+
+      </div>
+      
+    </div>
+  </div>
+</section>
+
+<!--Abstract-->
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Adding Object into images based on text instructions is a challenging task in semantic image editing, 
+            requiring a balance between preserving the original scene and seamlessly integrating the new object in a fitting location. 
+            Despite extensive efforts, existing models often struggle with this balance, 
+            particularly with finding a natural location for adding an object in complex scenes. 
+            We introduce Add-it, a training-free approach that extends diffusion models' attention mechanisms to incorporate information 
+            from three key sources: the scene image, the text prompt, and the generated image itself. 
+            Our weighted extended-attention mechanism maintains structural consistency and fine details while ensuring natural object placement. 
+            Without task-specific fine-tuning, Add-it achieves state-of-the-art results on both real and generated image insertion benchmarks, 
+            including our newly constructed "Additing Affordance Benchmark" for evaluating object placement plausibility, outperforming supervised methods. 
+            Human evaluations show that Add-it is preferred in over 80% of cases, and it also demonstrates improvements in various automated metrics.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+  </div>
+</section>
+
+<!-- Architecture -->
+<section class="hero is-light is-small">
+  <div class="container" style="max-width: 50%;">
+    <div class="hero-body">
+        <!--/ Architecture. -->
+        <div class="section-title">
+          <h2 class="title is-3 is-centered">How does it work?</h2>
+        </div>
+        <div class="columns is-centered has-text-centered">
+          <div class="column">
+            <div class="publication-img">
+              <img id="architecture" src="static/images/Architecture.png" style="width: 100%; height: auto;" />
+            </div>
+          </div>
+        </div>          
+        <p><strong>Architecture outline:</strong> Given a tuple of source noise <i>X<sup>T</sup><sub>source</sub></i> , 
+            target noise <i>X<sup>T</sup><sub>target</sub></i> , 
+            and a text prompt <i>P<sub>target</sub></i> , 
+            we first apply Structure Transfer to inject the source image's structure into the target image. 
+            We then extend the self-attention blocks so that <i>X<sup>T</sup><sub>target</sub></i> pulls keys and values from both <i>P<sub>target</sub></i> and <i>X<sup>T</sup><sub>source</sub></i>, 
+            with each source weighted separately. Finally, we use Subject Guided Latent Blending to retain fine details from the source image.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Qualitative compare -->
+<section class="section">
+  <div class="container" style="max-width: 60%;">
+
+      <div class="section-title">
+        <h2 class="title is-3">Comparison To Current Methods</h2>
+      </div>
+
+    <div class="columns is-centered">
+
+      <div class="column">
+        <div class="content">
+
+          <p>
+            Qualitative comparison of Add-It with other baselines, on real images <b>(left)</b> and generated images <b>(right)</b>.  <br>
+          </p>
+            <div class="publication-img">
+              <img id="style_transfer" src="static/images/qualitative_comparison.png"/>
+            </div>
+        </div>
+      </div>
+      <!--/ Cross domain. -->
+
+      <!-- New domain editing. -->
+    </div>
+    <!--/ New domain editing. -->
+  </div>
+</section>
+
+<!-- Quantitative Eval -->
+<section class="section">
+    <div class="container" style="max-width: 60%;">
+
+      <div class="section-title">
+        <h2 class="title is-3">Quantitative Evaluation</h2>
+      </div>
+
+    <div class="columns is-centered">
+
+      <div class="column">
+        <div class="content">
+
+          <p>
+            Quantitative comparison of Add-It with other baselines on human-preference <b>(left)</b> and automatic metrics (right)
+          </p>
+            <div class="publication-img">
+              <img id="style_transfer" src="static/images/quantitative_comparison.png"/>
+            </div>
+        </div>
+      </div>
+      <!--/ Cross domain. -->
+
+      <!-- New domain editing. -->
+    </div>
+    <!--/ New domain editing. -->
+  </div>
+</section>
+
+<!-- Step By Step -->
+<section class="hero is-light is-small">
+    <div class="container" style="max-width: 50%;">
+
+      <div class="section-title">
+        <br>
+        <h2 class="title is-3">Step-by-Step Generation</h2>
+      </div>
+
+    <div class="columns is-centered">
+
+      <!-- Cross domain. -->
+      <div class="column">
+        <div class="content">
+
+          <p>
+            Add-it can generate images Step-by-Step, allowing the final image to better adapt to user preferences at each step.  <br>
+          </p>
+            <div class="publication-img">
+              <img id="bias" src="static/images/step_by_step.png"/>
+              <br><br>
+            </div>
+        </div>
+      </div>
+      <!--/ Cross domain. -->
+
+      <!-- New domain editing. -->
+    </div>
+    <!--/ New domain editing. -->
+  </div>
+</section>
+
+<!-- Affordance Map -->
+<section class="section">
+    <div class="container" style="max-width: 50%;">
+      <div class="section-title">
+        <br>
+        <h2 class="title is-3">Refined Affordance maps</h2>
+      </div>
+
+    <div class="columns is-centered">
+
+      <!-- Cross domain. -->
+      <div class="column">
+        <div class="content">
+
+          <p>
+            Images generated by Add-it with and without the latent blending step, along with the resulting affordance map. 
+            The latent blending block helps align fine details from the source image, such as removing the girl’s glasses or adjusting the shadows of the bicycles. 
+          </p>
+            <div class="publication-img">
+              <img id="seed_var" src="static/images/affordance_map.png"/>
+            </div>
+        </div>
+      </div>
+      <!--/ Cross domain. -->
+
+      <!-- New domain editing. -->
+    </div>
+    <!--/ New domain editing. -->
+  </div>
+</section>
+
+<!-- Non Photorealistic -->
+<section class="hero is-light is-small">
+    <div class="container" style="max-width: 50%;">
+
+      <div class="section-title">
+        <br>
+        <h2 class="title is-3">Non-Photorealistic Images</h2>
+      </div>
+
+    <div class="columns is-centered">
+
+      <!-- Cross domain. -->
+      <div class="column">
+        <div class="content">
+          <p>
+            Add-it can operate on non-photorealistic source images.
+          </p>
+            <div class="publication-img">
+              <img id="ethnic_diversity" src="static/images/non_photorealistic.png"/>
+            </div>
+        </div>
+      </div>
+      <!--/ Cross domain. -->
+
+      <!-- New domain editing. -->
+    </div>
+    <!--/ New domain editing. -->
+  </div>
+</section>
+
+<!-- Cite -->
+<section class="section" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <h2 class="title">BibTeX</h2>
+      <p>If you find our work useful, please cite our paper:</p>
+      <pre><code>@misc{tewel2024addit,
+        title={Add-it: Training-Free Object Insertion in Images With Pretrained Diffusion Models}, 
+        author={Yoad Tewel and Rinon Gal and Dvir Samuel and Yuval Atzmon and Lior Wolf and Gal Chechik},
+        year={2024},
+        eprint={},
+        archivePrefix={arXiv},
+        primaryClass={cs.CV},
+        url={}, 
+  }</code></pre>
+    </div>
+  </section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <a class="icon-link"
+         href="">
+        <i class="fas fa-file-pdf"></i>
+      </a>
+      <a class="icon-link" href="" class="external-link" disabled>
+        <i class="fab fa-github"></i>
+      </a>
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This website is licensed under a <a rel="license"
+                                                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+          <p>
+            Website source code based on the <a href="https://nerfies.github.io/"> Nerfies</a> project page. If you want to reuse their <a
+              href="https://github.com/nerfies/nerfies.github.io">source code</a>, please credit them appropriately.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
